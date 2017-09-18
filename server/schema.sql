@@ -5,8 +5,8 @@ USE chat;
 CREATE TABLE messages (
   /* Describe your table here.*/
   id int NOT NULL,
-  user int NOT NULL,
-  room int NOT NULL,
+  user int,
+  room int,
   createdAt datetime NOT NULL,
   text varchar(240),
 
