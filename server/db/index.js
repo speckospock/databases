@@ -46,6 +46,19 @@ exports.writeMessage = (message = '', username = 'anonymous', roomname = 'lobby'
 
 /*
 
+************************************
+**** EVERY IMPLEMENTATION BELOW ****
+************************************
+
+\        /
+ \      /
+  \ () /
+    ||
+    ||
+   /  \
+   |  |
+   ,  ,
+
 /////////////////
 //// MONGODB ////
 /////////////////
