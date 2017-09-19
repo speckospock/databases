@@ -2,19 +2,27 @@ const mongoClient = require('mongodb').MongoClient;
 
 const url = 'mongodb://localhost:27017/test';
 
-let id = 0;
+let id;
+
+mongoClient.connect(url, (err, db) => {
+  db.createCollection('messages', (err, collection) => {
+    collection.find().sort({objectId: 1}).toArray((err, documents) => {
+      id = documents[documents.length -1].objectId + 1;
+    });
+  });
+});
 
 exports.readMessages = (callback, user = null) => {
   mongoClient.connect(url, (err, db) => {
     db.createCollection('messages', (err, collection) => {
       if (!user) {
-        collection.find().toArray((err, documents) => {
+        collection.find().sort({objectId: 1}).toArray((err, documents) => {
           console.log("READ: ", documents);
           callback(documents);
           db.close();
         });
       } else {
-        collection.find({username: user}).toArray((err, documents) => {
+        collection.find({username: user}).sort({objectId: 1}).toArray((err, documents) => {
           console.log("READ: ", documents);
           callback(documents);
           db.close();
@@ -30,12 +38,63 @@ exports.writeMessage = (message = '', username = 'anonymous', roomname = 'lobby'
     db.createCollection('messages', (err, collection) => {
       collection.insert({username: username, text: message, roomname: roomname, objectId: id++});
       console.log('inserted!!! HEEHEE');
+      // exports.readMessages((x) => x);
       db.close();
     });
   });
 };
 
 /*
+
+/////////////////
+//// MONGODB ////
+/////////////////
+
+const mongoClient = require('mongodb').MongoClient;
+
+const url = 'mongodb://localhost:27017/test';
+
+let id;
+
+mongoClient.connect(url, (err, db) => {
+  db.createCollection('messages', (err, collection) => {
+    collection.find().sort({objectId: 1}).toArray((err, documents) => {
+      id = documents[documents.length -1].objectId + 1;
+    });
+  });
+});
+
+exports.readMessages = (callback, user = null) => {
+  mongoClient.connect(url, (err, db) => {
+    db.createCollection('messages', (err, collection) => {
+      if (!user) {
+        collection.find().sort({objectId: 1}).toArray((err, documents) => {
+          console.log("READ: ", documents);
+          callback(documents);
+          db.close();
+        });
+      } else {
+        collection.find({username: user}).sort({objectId: 1}).toArray((err, documents) => {
+          console.log("READ: ", documents);
+          callback(documents);
+          db.close();
+
+        });
+      }
+    });
+  });
+};
+
+exports.writeMessage = (message = '', username = 'anonymous', roomname = 'lobby') => {
+  mongoClient.connect(url, (err, db) => {
+    db.createCollection('messages', (err, collection) => {
+      collection.insert({username: username, text: message, roomname: roomname, objectId: id++});
+      console.log('inserted!!! HEEHEE');
+      // exports.readMessages((x) => x);
+      db.close();
+    });
+  });
+};
 
 ///////////////////////////
 //// SEQUELIZE + MYSQL ////
