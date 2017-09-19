@@ -60,7 +60,9 @@ exports.readMessages = (callback, user = null) => {
   }
 };
 
-exports.writeMessage = (message, username = 'anonymous', roomname = 'lobby') => {
+// exports.readMessages((results) => { console.log(results); });
+
+exports.writeMessage = (callback, message, username = 'anonymous', roomname = 'lobby') => {
   //add column to the messages DB table
   chat.query(`INSERT INTO \`messages\` (username, roomname, text) VALUES ("${username}", "${roomname}", "${message}")`, (err, results) => {
     if (err) {
@@ -70,8 +72,8 @@ exports.writeMessage = (message, username = 'anonymous', roomname = 'lobby') => 
       if (err) {
         throw err;
       }
-      // check what SQL spits out
-      return;
+      // // check what SQL spits out
+      // return;
     });
   });
 };

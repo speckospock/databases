@@ -2,14 +2,9 @@ var db = require('../db');
 
 module.exports = {
   messages: {
-    get: function (req) {
+    get: function (req, callback) {
       //pass along user
-      db.readMessages((data) => {
-        console.log(JSON.stringify(data));
-        return {
-          'results': data
-        };
-      }, req.username);
+      db.readMessages(data => callback(data), req.username);
 
     }, // a function which produces all the messages
     post: function (req) {
