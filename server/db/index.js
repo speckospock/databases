@@ -31,49 +31,39 @@ const chat = mysql.createConnection({
 exports.readMessages = (callback, user = null) => {
   //build a query string
   // chat.connect();
-  let blah = user;
   if (user) {
-    chat.query(`SELECT * FROM \`messages\` WHERE \`username\` = "${user}"`, (err, results) => {
+    chat.query('SELECT * FROM `messages` WHERE `username` = "'+ user + '"', (err, results) => {
       if (err) {
         throw err;
       }
-      chat.end((err) => {
-        if (err) {
-          throw err;
-        }
-        callback(results);
-      });
+      callback(results);
+
     });
   } else {
     chat.query('SELECT * FROM `messages`', (err, results) => {
       if (err) {
         throw err;
       }
-      chat.end((err) => {
-        if (err) {
-          throw err;
-        }
-        // console.log(results);
-        callback(results);
-      });
+      callback(results);
+
     });
   }
 };
 
 // exports.readMessages((results) => { console.log(results); });
 
-exports.writeMessage = (callback, message, username = 'anonymous', roomname = 'lobby') => {
+exports.writeMessage = (message, username = 'anonymous', roomname = 'lobby') => {
   //add column to the messages DB table
-  chat.query(`INSERT INTO \`messages\` (username, roomname, text) VALUES ("${username}", "${roomname}", "${message}")`, (err, results) => {
+  chat.query('INSERT INTO `messages` (username, roomname, text) VALUES ("' + username + '", "'+ roomname + '", "' + message +'")', (err, results) => {
     if (err) {
       throw err;
     }
-    chat.end((err) => {
-      if (err) {
-        throw err;
-      }
-      // // check what SQL spits out
-      // return;
-    });
+    // chat.end((err) => {
+    //   if (err) {
+    //     throw err;
+    //   }
+    //   // // check what SQL spits out
+    //   // return;
+    // });
   });
 };

@@ -23,6 +23,7 @@ const collectData = (request, callback) => {
 module.exports = {
   messages: {
     get: function (req, res) {
+      // console.log(JSON.stringify(req));
       //sendResponse(reponse, {results: /*result of querying DB*/}, 200);
       models.messages.get(req, (data) => {
         let results = {
@@ -39,9 +40,11 @@ module.exports = {
       // res.end();
     },
     post: (req, res) => {
-      collectData(req, (data) => models.messages.post(data));
-      res.writeHead(201, headers);
-      res.end();
+      // console.log(JSON.stringify(req));
+      collectData(req, (data) => {
+        models.messages.post(data);
+        sendResponse(res, data, 201);
+      });
       //collectData (pass on req, callback(message) => PUTs message in DB)
       //sendResponse back to client
     } // a function which handles posting a message to the database

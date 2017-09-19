@@ -9,7 +9,7 @@ module.exports = {
     }, // a function which produces all the messages
     post: function (req) {
       //pass along user, room, message
-      db.writeMessage(req.message, req.username, req.roomname);
+      db.writeMessage(req.text, req.username, req.roomname);
     } // a function which can be used to insert a message into the database
   },
 
