@@ -7,7 +7,7 @@ let id;
 mongoClient.connect(url, (err, db) => {
   db.createCollection('messages', (err, collection) => {
     collection.find().sort({objectId: 1}).toArray((err, documents) => {
-      id = documents[documents.length -1].objectId + 1;
+      id = documents[documents.length - 1].objectId + 1;
     });
   });
 });
@@ -17,13 +17,13 @@ exports.readMessages = (callback, user = null) => {
     db.createCollection('messages', (err, collection) => {
       if (!user) {
         collection.find().sort({objectId: 1}).toArray((err, documents) => {
-          console.log("READ: ", documents);
+          console.log('READ: ', documents);
           callback(documents);
           db.close();
         });
       } else {
         collection.find({username: user}).sort({objectId: 1}).toArray((err, documents) => {
-          console.log("READ: ", documents);
+          console.log('READ: ', documents);
           callback(documents);
           db.close();
 
