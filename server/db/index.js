@@ -60,7 +60,7 @@ const readMessages = (user = null) => {
         if (err) {
           throw err;
         }
-        console.log(results);
+        // console.log(results);
         return results;
       });
     });
@@ -88,7 +88,7 @@ const writeMessage = (message, username = 'anonymous', roomname = 'lobby') => {
   });
 };
 // readMessages('anon');
-writeMessage('bye');
+// writeMessage('bye');
 // const writeUser = (user) => {
 //   //save user to the users DB table
 // };
