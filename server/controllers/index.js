@@ -57,6 +57,10 @@ module.exports = {
     },
     post: function (req, res) {
       //exactly the same as above
+      console.log('posting user!!!', req);
+      collectData(req, (data) => {
+        sendResponse(res, data, 201);
+      });
     }
   }
 };

@@ -7,8 +7,9 @@ CREATE TABLE messages (
   objectId int NOT NULL AUTO_INCREMENT,
   username varchar(20) NOT NULL,
   roomname varchar(20),
-  -- createdAt datetime NOT NULL,
-  text varchar(240) NOT NULL,
+  createdAt datetime NOT NULL,
+  updatedAt datetime NOT NULL,
+  text varchar(240),
 
   PRIMARY KEY (objectId)
   -- auto increment id
