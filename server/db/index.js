@@ -20,7 +20,7 @@ connection.query('SELECT * FROM `books` WHERE `author` = "David"', function (err
 
 */
 
-var chat = mysql.createConnection({
+const chat = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'plantlife',
@@ -32,22 +32,63 @@ chat.connect((err) => {
     throw err;
   }
   //do stuff;
+
 });
 
-var readMessages = (room = 'lobby') => {
-  //get a message (or messages?) from the messages DB table
-  return messages;
+const readMessages = (user = null) => {
+  //build a query string
+  // chat.connect();
+  let blah = user;
+  if (user) {
+    chat.query(`SELECT * FROM \`messages\` WHERE \`username\` = "${user}"`, (err, results) => {
+      if (err) {
+        throw err;
+      }
+      chat.end((err) => {
+        if (err) {
+          throw err;
+        }
+        return results;
+      });
+    });
+  } else {
+    chat.query('SELECT * FROM `messages`', (err, results) => {
+      if (err) {
+        throw err;
+      }
+      chat.end((err) => {
+        if (err) {
+          throw err;
+        }
+        console.log(results);
+        return results;
+      });
+    });
+  }
 };
 
-var readUsers = (user = 'anonymous') => {
-  //return a user (or users?) from the users DB table
-  return users;
-};
+// const readUsers = (user = null) => {
+//   //return a user (or users?) from the users DB table
+//   return users;
+// };
 
-var writeMessage = (message, user = 'anonymous', room = 'lobby') => {
+const writeMessage = (message, username = 'anonymous', roomname = 'lobby') => {
   //add column to the messages DB table
+  chat.query(`INSERT INTO \`messages\` (username, roomname, text) VALUES ("${username}", "${roomname}", "${message}")`, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    chat.end((err) => {
+      if (err) {
+        throw err;
+      }
+      // check what SQL spits out
+      return;
+    });
+  });
 };
-
-var writeUser = (user) => {
-  //save user to the users DB table
-};
+// readMessages('anon');
+writeMessage('bye');
+// const writeUser = (user) => {
+//   //save user to the users DB table
+// };
