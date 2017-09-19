@@ -27,15 +27,8 @@ const chat = mysql.createConnection({
   database: 'chat'
 });
 
-chat.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  //do stuff;
 
-});
-
-const readMessages = (user = null) => {
+exports.readMessages = (callback, user = null) => {
   //build a query string
   // chat.connect();
   let blah = user;
@@ -48,7 +41,7 @@ const readMessages = (user = null) => {
         if (err) {
           throw err;
         }
-        return results;
+        callback(results);
       });
     });
   } else {
@@ -61,18 +54,13 @@ const readMessages = (user = null) => {
           throw err;
         }
         // console.log(results);
-        return results;
+        callback(results);
       });
     });
   }
 };
 
-// const readUsers = (user = null) => {
-//   //return a user (or users?) from the users DB table
-//   return users;
-// };
-
-const writeMessage = (message, username = 'anonymous', roomname = 'lobby') => {
+exports.writeMessage = (message, username = 'anonymous', roomname = 'lobby') => {
   //add column to the messages DB table
   chat.query(`INSERT INTO \`messages\` (username, roomname, text) VALUES ("${username}", "${roomname}", "${message}")`, (err, results) => {
     if (err) {
@@ -87,8 +75,3 @@ const writeMessage = (message, username = 'anonymous', roomname = 'lobby') => {
     });
   });
 };
-// readMessages('anon');
-// writeMessage('bye');
-// const writeUser = (user) => {
-//   //save user to the users DB table
-// };
