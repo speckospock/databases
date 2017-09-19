@@ -5,8 +5,8 @@ USE chat;
 CREATE TABLE messages (
   /* Describe your table here.*/
   id int NOT NULL,
-  user int NOT NULL,
-  room int NOT NULL,
+  user varchar(20) NOT NULL,
+  room varchar(20),
   createdAt datetime NOT NULL,
   message varchar(240) NOT NULL,
 
@@ -14,17 +14,17 @@ CREATE TABLE messages (
 );
 
 /* Create other tables and define schemas for them here! */
-CREATE TABLE rooms (
-  id int NOT NULL,
-  name varchar(20) NOT NULL,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE users (
-  id int NOT NULL,
-  name varchar(20) NOT NULL,
-  PRIMARY KEY (id)
-);
+-- CREATE TABLE rooms (
+--   id int NOT NULL,
+--   name varchar(20) NOT NULL,
+--   PRIMARY KEY (id)
+-- );
+--
+-- CREATE TABLE users (
+--   id int NOT NULL,
+--   name varchar(20) NOT NULL,
+--   PRIMARY KEY (id)
+-- );
 
 
 
